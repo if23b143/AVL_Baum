@@ -69,6 +69,12 @@ class BinaryTree:
         print('   ' * level + '->', node.value)
         self._print_tree_recursive(node.left, level + 1)
 
+numbers = [4,5,7,2,5]
+smallestNumber = min(numbers)
+highestNumber = max(numbers)
+average = sum(numbers) / len(numbers)
+
+
 # Example usage:
 tree = BinaryTree()
 tree.insert(5)
@@ -85,5 +91,8 @@ if(tree.avl_factor > 1 or tree.avl_factor < -1):
     print("AVL: no")
 else:
     print("AVL: yes")
+
+print("min:", smallestNumber, "max:", highestNumber, "avg:", average)
+
 
 tree.print_tree()
