@@ -86,7 +86,7 @@ tree = BinaryTree()
 if len(sys.argv) == 2:                  #AVL-ÜBERPRÜFUNG
     filename = sys.argv[1]
     tree.build_tree_from_file(filename)
-
+    #CHANGE THIS(CANNOT BE NOT NONE)
     if tree.avl_factor is not None and (tree.avl_factor > 1 or tree.avl_factor < -1):
         print("AVL: no")
     else:
