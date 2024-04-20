@@ -1,3 +1,5 @@
+import sys
+
 class TreeNode:
     def __init__(self, value):
         self.value = value
@@ -69,23 +71,26 @@ class BinaryTree:
         print('   ' * level + '->', node.value)
         self._print_tree_recursive(node.left, level + 1)
 
+    def build_tree_from_file(self, filename):
+        with open(filename, 'r') as file:
+            for line in file:
+                value = int(line.strip())
+                self.insert(value)
+
 numbers = [4,5,7,2,5]
 smallestNumber = min(numbers)
 highestNumber = max(numbers)
 average = sum(numbers) / len(numbers)
 
 
-# Example usage:
+
+
+#MAIN-FUNCTION
+
+filename = sys.argv[1]
 tree = BinaryTree()
-tree.insert(5)
-tree.insert(3)
-tree.insert(7)
-tree.insert(2)
-tree.insert(4)
-tree.insert(6)
-tree.insert(8)
-tree.insert(9)
-tree.insert(10)
+tree.build_tree_from_file(filename)
+
 
 if(tree.avl_factor > 1 or tree.avl_factor < -1):
     print("AVL: no")
