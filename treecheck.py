@@ -76,27 +76,39 @@ class BinaryTree:
             for line in file:
                 value = int(line.strip())
                 self.insert(value)
+                numbers.append(value)
 
-numbers = [4,5,7,2,5]
+#MAIN-FUNCTION
+numbers = []
+tree = BinaryTree()
+
+#MINDESTENS 2 Argumente weil "python" das Programm ist UND "treecheck.py baum_daten.txt" die beiden Argumente
+if len(sys.argv) == 2:                  #AVL-ÜBERPRÜFUNG
+    filename = sys.argv[1]
+    tree.build_tree_from_file(filename)
+
+    if tree.avl_factor is not None and (tree.avl_factor > 1 or tree.avl_factor < -1):
+        print("AVL: no")
+    else:
+        print("AVL: yes")
+elif len(sys.argv) == 3:                #SUCHFUNKTION
+    searchtree = BinaryTree()
+
+    searchname = sys.argv[2]
+    tree.build_tree_from_file(searchname)
+
+
+    print("DEBUG INFO")
+else:
+    print("Zuviele oder Zuwenige Argumente!")
+    sys.exit(1)
+
+
+
+
 smallestNumber = min(numbers)
 highestNumber = max(numbers)
 average = sum(numbers) / len(numbers)
-
-
-
-
-#MAIN-FUNCTION
-
-filename = sys.argv[1]
-tree = BinaryTree()
-tree.build_tree_from_file(filename)
-
-
-if(tree.avl_factor > 1 or tree.avl_factor < -1):
-    print("AVL: no")
-else:
-    print("AVL: yes")
-
 print("min:", smallestNumber, "max:", highestNumber, "avg:", average)
 
 
