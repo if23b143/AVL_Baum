@@ -78,6 +78,49 @@ class BinaryTree:
                 self.insert(value)
                 numbers.append(value)
 
+
+class searchTree:
+    def __init__(self):
+        self.root = None
+        self.avl_factor = None
+    
+    def insert(self, value):
+        if not self.root:
+            self.root = TreeNode(value)
+        else:
+            self._insert_recursive(self.root, value)
+    
+    def _insert_recursive(self, node, value):
+        if value < node.value:
+            if node.left is None:
+                node.left = TreeNode(value)
+            else:
+                self._insert_recursive(node.left, value)
+        elif value > node.value:
+            if node.right is None:
+                node.right = TreeNode(value)
+            else:
+                self._insert_recursive(node.right, value)
+
+    def print_tree(self):
+        self._print_tree_recursive(self.root, 0)
+    
+    def _print_tree_recursive(self, node, level):
+        if node is None:
+            return
+        self._print_tree_recursive(node.right, level + 1)
+        print('   ' * level + '->', node.value)
+        self._print_tree_recursive(node.left, level + 1)
+
+    def build_tree_from_file(self, filename):
+        with open(filename, 'r') as file:
+            for line in file:
+                value = int(line.strip())
+                self.insert(value)
+                #numbers.append(value)
+
+
+
 #MAIN-FUNCTION
 numbers = []
 tree = BinaryTree()
@@ -91,11 +134,17 @@ if len(sys.argv) == 2:                  #AVL-ÜBERPRÜFUNG
         print("AVL: no")
     else:
         print("AVL: yes")
-elif len(sys.argv) == 3:                #SUCHFUNKTION
-    searchtree = BinaryTree()
 
+elif len(sys.argv) == 3:                #SUCHFUNKTION
+    originaltree = searchTree()
+    searchtree = searchTree()
+    #OriginalTree
+    filename = sys.argv[1]              
+    originaltree.build_tree_from_file(filename)
+
+    #Tree für die Suche
     searchname = sys.argv[2]
-    tree.build_tree_from_file(searchname)
+    searchtree.build_tree_from_file(searchname)
 
 
     print("DEBUG INFO")
