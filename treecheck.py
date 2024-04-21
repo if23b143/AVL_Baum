@@ -82,6 +82,7 @@ class BinaryTree:
 class searchTree:
     def __init__(self):
         self.root = None
+        self.path_to_value = []  # Array zur Speicherung des Pfads zum Wert
     
     def insert(self, value):
         if not self.root:
@@ -102,13 +103,26 @@ class searchTree:
                 self._insert_recursive(node.right, value)
 
     def get_data(self):
-        print("test")
-        #TODO
+        return self.path_to_value
 
-    def search_tree(self):
-        print("test")
-        #TODO
-    
+    def search_simple_tree(self, value):
+        found, path = self._search_recursive(self.root, value, [])
+        if found:
+            path_str = ', '.join(map(str, path))
+            print(f"{value} found: {path_str}")
+        else:
+            print(f"{value} not found!")
+
+    def _search_recursive(self, node, value, path):
+        if node is None:
+            return False, []
+        if node.value == value:
+            return True, path + [node.value]
+        elif value < node.value:
+            return self._search_recursive(node.left, value, path + [node.value])
+        else:
+            return self._search_recursive(node.right, value, path + [node.value])
+
     def print_tree(self):
         self._print_tree_recursive(self.root, 0)
     
@@ -126,6 +140,10 @@ class searchTree:
                 self.insert(value)
                 #numbers.append(value)
 
+    
+
+
+
 
 
 #MAIN-FUNCTION
@@ -141,6 +159,11 @@ if len(sys.argv) == 2:                  #AVL-ÜBERPRÜFUNG
         print("AVL: no")
     else:
         print("AVL: yes")
+    
+    smallestNumber = min(numbers)
+    highestNumber = max(numbers)
+    average = sum(numbers) / len(numbers)
+    print("min:", smallestNumber, "max:", highestNumber, "avg:", average)
 
 elif len(sys.argv) == 3:                #SUCHFUNKTION
     originaltree = searchTree()
@@ -155,7 +178,7 @@ elif len(sys.argv) == 3:                #SUCHFUNKTION
     searchtree.build_tree_from_file(searchname)
 
     #TODO
-
+    originaltree.search_simple_tree(searchtree.root.value)
 
     print("DEBUG INFO")
 else:
@@ -165,9 +188,5 @@ else:
 
 
 
-smallestNumber = min(numbers)
-highestNumber = max(numbers)
-average = sum(numbers) / len(numbers)
-print("min:", smallestNumber, "max:", highestNumber, "avg:", average)
 
 tree.print_tree()
