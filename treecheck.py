@@ -82,7 +82,6 @@ class BinaryTree:
 class searchTree:
     def __init__(self):
         self.root = None
-        self.avl_factor = None
     
     def insert(self, value):
         if not self.root:
@@ -102,6 +101,14 @@ class searchTree:
             else:
                 self._insert_recursive(node.right, value)
 
+    def get_data(self):
+        print("test")
+        #TODO
+
+    def search_tree(self):
+        print("test")
+        #TODO
+    
     def print_tree(self):
         self._print_tree_recursive(self.root, 0)
     
@@ -138,6 +145,7 @@ if len(sys.argv) == 2:                  #AVL-ÜBERPRÜFUNG
 elif len(sys.argv) == 3:                #SUCHFUNKTION
     originaltree = searchTree()
     searchtree = searchTree()
+
     #OriginalTree
     filename = sys.argv[1]              
     originaltree.build_tree_from_file(filename)
@@ -145,6 +153,8 @@ elif len(sys.argv) == 3:                #SUCHFUNKTION
     #Tree für die Suche
     searchname = sys.argv[2]
     searchtree.build_tree_from_file(searchname)
+
+    #TODO
 
 
     print("DEBUG INFO")
@@ -159,6 +169,5 @@ smallestNumber = min(numbers)
 highestNumber = max(numbers)
 average = sum(numbers) / len(numbers)
 print("min:", smallestNumber, "max:", highestNumber, "avg:", average)
-
 
 tree.print_tree()
