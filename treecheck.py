@@ -107,7 +107,7 @@ class searchTree:
         return self.path_to_value
 
     def search_simple_tree(self, value):
-        found, path = self._search_recursive(self.root, value, [])
+        found, path = self._search_simple_recursive(self.root, value, [])
         if found:
             #nimmt das Array "path" und erstellt aus jedem Element ein String und fügt Sie zusammen | DANN "joint" er die Strings und nach jedem weiteren Element gibt er ", " hinzu
             path_string = ', '.join(map(str, path))      
@@ -115,15 +115,15 @@ class searchTree:
         else:
             print(f"{value} not found!")
 
-    def _search_recursive(self, node, value, path):
+    def _search_simple_recursive(self, node, value, path):
         if node is None:
             return False, []
         if node.value == value:
             return True, path + [node.value]
         elif value < node.value:
-            return self._search_recursive(node.left, value, path + [node.value])
+            return self._search_simple_recursive(node.left, value, path + [node.value])
         else:
-            return self._search_recursive(node.right, value, path + [node.value])
+            return self._search_simple_recursive(node.right, value, path + [node.value])
 
     def print_tree(self):
         self._print_tree_recursive(self.root, 0)
@@ -182,12 +182,13 @@ elif len(sys.argv) == 3:                #SUCHFUNKTION
     searchtree.build_tree_from_file(searchname)
     print(searchtree.counter)
 
-    #TODO
+    
     if(searchtree.counter > 1):     #Wenn der Tree mehr als eine Zahl hat
+        #TODO
+
         print("COMPLEX SEARCH")
     else:                           #Wenn der Tree nur einen Nummer hat
         originaltree.search_simple_tree(searchtree.root.value)          
-    
 
     print("DEBUG INFO")
 else:
