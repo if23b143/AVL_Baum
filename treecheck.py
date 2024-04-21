@@ -125,6 +125,48 @@ class searchTree:
         else:
             return self._search_simple_recursive(node.right, value, path + [node.value])
 
+    def search_sub_tree(self, originaltree):
+        if self._is_sub_tree(self.root, originaltree.root):
+            print(originaltree.root)
+            print("subtree found")
+        else:
+            print(originaltree.root)
+            print(self.root)
+            print("subtree not found")
+    
+    def _is_sub_tree(self, node1, node2):
+        if node1.left is not None:
+            if node1.value == node2.value:              #CHANGE - was ist wenn nicht gleich???
+                return True
+            elif node2.left is not None or node2.right is not None:
+                return (self._is_sub_tree(node1.left, node2.left) or self._is_sub_tree(node1.right, node2.right))
+            else:
+                return False
+            #print("doSomething")
+        if node1.right is not None:
+            if node1.value == node2.value:              #CHANGE
+                return True
+            elif node2.left is not None or node2.right is not None:
+                return (self._is_sub_tree(node1.left, node2.left) or self._is_sub_tree(node1.right, node2.right))
+            else:
+                return False
+            
+
+
+        '''
+        if node1 is None and node2 is None:
+            return True
+        if node1 is None or node2 is None:
+            #CHANGE THIS
+            return True
+        if node1.value != node2.value:
+            #CHANGE THIS
+            return False
+        
+        return (self._is_sub_tree(node1.left, node2.left) and
+                self._is_sub_tree(node1.right, node2.right))
+        '''
+
     def print_tree(self):
         self._print_tree_recursive(self.root, 0)
     
@@ -185,8 +227,8 @@ elif len(sys.argv) == 3:                #SUCHFUNKTION
     
     if(searchtree.counter > 1):     #Wenn der Tree mehr als eine Zahl hat
         #TODO
-
-        print("COMPLEX SEARCH")
+        searchtree.search_sub_tree(originaltree)
+        searchtree.print_tree()
     else:                           #Wenn der Tree nur einen Nummer hat
         originaltree.search_simple_tree(searchtree.root.value)          
 
