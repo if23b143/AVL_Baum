@@ -133,39 +133,35 @@ class searchTree:
             print(originaltree.root)
             print(self.root)
             print("subtree not found")
-    
-    def _is_sub_tree(self, node1, node2):
-        if node1.left is not None:
-            if node1.value == node2.value:              #CHANGE - was ist wenn nicht gleich???
-                return True
-            elif node2.left is not None or node2.right is not None:
-                return (self._is_sub_tree(node1.left, node2.left) or self._is_sub_tree(node1.right, node2.right))
-            else:
-                return False
-            #print("doSomething")
-        if node1.right is not None:
-            if node1.value == node2.value:              #CHANGE
-                return True
-            elif node2.left is not None or node2.right is not None:
-                return (self._is_sub_tree(node1.left, node2.left) or self._is_sub_tree(node1.right, node2.right))
-            else:
-                return False
-            
 
-
-        '''
-        if node1 is None and node2 is None:
+    def is_sub_root(self, mainTreeroot, subTreeroot):
+        if subTreeroot is None and mainTreeroot is None:
             return True
-        if node1 is None or node2 is None:
-            #CHANGE THIS
-            return True
-        if node1.value != node2.value:
-            #CHANGE THIS
+        
+        if mainTreeroot is None:
             return False
+        
+        if self._is_sub_tree(mainTreeroot, subTreeroot):
+            return True
+        
+        return (self.is_sub_root(mainTreeroot.left, subTreeroot) or
+                self.is_sub_root(mainTreeroot.right, subTreeroot))
+
+
+    def _is_sub_tree(self, node1, node2):         
+        if node2 is None:
+            return True
+        
+        if node1 is None:
+            return False
+                                    
+        if node1.value != node2.value:
+             return (self._is_sub_tree(node1.left, node2) or
+                self._is_sub_tree(node1.right, node2))
         
         return (self._is_sub_tree(node1.left, node2.left) and
                 self._is_sub_tree(node1.right, node2.right))
-        '''
+        
 
     def print_tree(self):
         self._print_tree_recursive(self.root, 0)
@@ -199,7 +195,7 @@ tree = BinaryTree()
 if len(sys.argv) == 2:                  #AVL-ÜBERPRÜFUNG
     filename = sys.argv[1]
     tree.build_tree_from_file(filename)
-    #CHANGE THIS(CANNOT BE NOT NONE)
+    #CHANGE THIS(CANNOT BE "NOT NONE")
     if tree.avl_factor is not None and (tree.avl_factor > 1 or tree.avl_factor < -1):
         print("AVL: no")
     else:
@@ -222,17 +218,16 @@ elif len(sys.argv) == 3:                #SUCHFUNKTION
     #Tree für die Suche
     searchname = sys.argv[2]
     searchtree.build_tree_from_file(searchname)
-    print(searchtree.counter)
+    #print(searchtree.counter)
 
     
     if(searchtree.counter > 1):     #Wenn der Tree mehr als eine Zahl hat
         #TODO
-        searchtree.search_sub_tree(originaltree)
+        originaltree.search_sub_tree(searchtree)
         searchtree.print_tree()
     else:                           #Wenn der Tree nur einen Nummer hat
         originaltree.search_simple_tree(searchtree.root.value)          
 
-    print("DEBUG INFO")
 else:
     print("Zuviele oder Zuwenige Argumente!")
     sys.exit(1)
