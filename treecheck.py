@@ -144,7 +144,6 @@ class searchTree:
         elif originaltree is None:
             return False       
         elif originaltree.value != searchtree.value:
-
              #WENN eines der beiden rekursiven Funktionen ein "True" bekommt == "True" 
              return (self.is_sub_tree(originaltree.left, searchtree) or self.is_sub_tree(originaltree.right, searchtree))
         #WENN Beide ein "True" herausbekommen == "True"
