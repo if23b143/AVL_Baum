@@ -7,7 +7,7 @@ class TreeNode:                                 #Die Node selbst, die für den T
         self.right = None
         self.height = 1
 #########################################################################################
-#---------------------------------KLASSE FÜR AUFGABE 1-----------------------------------
+#---------------------------------KLASSE FÜR AUFGABE 1----------------------------------#
 #########################################################################################
 
 class BinaryTree:                               
@@ -47,10 +47,6 @@ class BinaryTree:
         node.height = 1 + max(self.height(node.left), self.height(node.right)) 
     
     def balance(self, node, new_value):
-        #############################################################
-        self.balance_recursive(self.root)                           #BRAUCH ICH DICH ÜBERHAUPT?????
-        #############################################################
-
         #Finde den Balance-Faktor von den Unterbäumen heraus
         balance_factor = self.height(node.right) - self.height(node.left)
         
@@ -63,27 +59,20 @@ class BinaryTree:
         #Speichere den AVL-Wert 
         self.avl_factor = balance_factor
     
-    def balance_recursive(self, node):
-        if node is None:
-            return 0
-        
-        self.balance_recursive(node.left)
-        self.balance_recursive(node.right)
-    
     def height(self, node):
         if node is None:
             return 0
         return node.height
 
     def print_tree(self):
-        self._print_tree_recursive(self.root, 0)
+        self.print_tree_recursive(self.root, 0)
     
-    def _print_tree_recursive(self, node, level):
+    def print_tree_recursive(self, node, level):
         if node is None:
             return
-        self._print_tree_recursive(node.right, level + 1)
+        self.print_tree_recursive(node.right, level + 1)
         print('   ' * level + '->', node.value)
-        self._print_tree_recursive(node.left, level + 1)
+        self.print_tree_recursive(node.left, level + 1)
 
     def build_tree_from_file(self, filename):
         with open(filename, 'r') as file:
@@ -92,13 +81,12 @@ class BinaryTree:
                 self.insert(value)                      #call "insert" mit dem Parameter "value"
                 numbers.append(value)                   #gib die Zahl in das Array
 #########################################################################################
-#---------------------------------KLASSE FÜR AUFGABE 2-----------------------------------
+#---------------------------------KLASSE FÜR AUFGABE 2----------------------------------#
 #########################################################################################
 
 class searchTree:
     def __init__(self):
         self.root = None
-        self.path_to_value = []  ############################################ Array zur Speicherung des Pfads zum Wert
         self.counter = 0
     
     def insert(self, value):
@@ -118,10 +106,7 @@ class searchTree:
                 node.right = TreeNode(value)
             else:
                 self.insert_recursive(node.right, value)
-    ##########################################################
-    def get_data(self):                                      #BRAUCH ICH DICH ÜBERHAUPT NOCH?????
-        return self.path_to_value
-    ##########################################################
+   
     def search_simple_tree(self, value):
         #Schaut ob es einen Wert im Tree gibt und gibt einen Bool-Wert mit einem Array zurück
         found, path = self.search_simple_recursive(self.root, value, [])
@@ -152,45 +137,28 @@ class searchTree:
             print("subtree found")
         else:
             print("subtree not found")
-    ######################---------------ELIF/ELSE---------------################
+    
     def is_sub_tree(self, originaltree, searchtree):         
         if searchtree is None:
             return True
-        if originaltree is None:
+        elif originaltree is None:
             return False       
-        if originaltree.value != searchtree.value:
-             
-        #----------------NEU FORMULIEREN(Nimm die Grafik her)--------------------------
+        elif originaltree.value != searchtree.value:
 
-             #WENN eines der beiden rekursiven Funktionen ein "True" bekommt == "True"
+             #WENN eines der beiden rekursiven Funktionen ein "True" bekommt == "True" 
              return (self.is_sub_tree(originaltree.left, searchtree) or self.is_sub_tree(originaltree.right, searchtree))
-        #WENN Beide ein "True" herausbekommen
+        #WENN Beide ein "True" herausbekommen == "True"
         return (self.is_sub_tree(originaltree.left, searchtree.left) and self.is_sub_tree(originaltree.right, searchtree.right))
-    ####################################################################
-    '''
-    def is_sub_root(self, mainTreeroot, subTreeroot):
-        if subTreeroot is None and mainTreeroot is None:
-            return True
-        
-        if mainTreeroot is None:
-            return False
-        
-        if self.is_sub_tree(mainTreeroot, subTreeroot):
-            return True
-        
-        return (self.is_sub_root(mainTreeroot.left, subTreeroot) or
-                self.is_sub_root(mainTreeroot.right, subTreeroot))
-                '''
-    ########################################################################
-    def print_tree(self):
-        self._print_tree_recursive(self.root, 0)
     
-    def _print_tree_recursive(self, node, level):
+    def print_tree(self):
+        self.print_tree_recursive(self.root, 0)
+    
+    def print_tree_recursive(self, node, level):
         if node is None:
             return
-        self._print_tree_recursive(node.right, level + 1)
+        self.print_tree_recursive(node.right, level + 1)
         print('   ' * level + '->', node.value)
-        self._print_tree_recursive(node.left, level + 1)
+        self.print_tree_recursive(node.left, level + 1)
 
     def build_tree_from_file(self, filename):
         with open(filename, 'r') as file:      
@@ -200,7 +168,7 @@ class searchTree:
                 self.counter += 1
 
 #########################################################################################
-#------------------------------------Main-Funktion---------------------------------------
+#------------------------------------Main-Funktion--------------------------------------#
 #########################################################################################
 numbers = []
 tree = BinaryTree()
